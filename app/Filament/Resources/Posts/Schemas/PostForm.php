@@ -22,9 +22,11 @@ class PostForm
                         ->required()
                         ->columnSpanFull(),
                 ]),
-            Tabs::make('Tabs')
+            Tabs::make('Upload options')
                 ->tabs([
                     Tabs\Tab::make('Cover Image')
+                        ->label('File Upload')
+                        ->icon('heroicon-o-arrow-up-tray')
                         ->schema([
                             FileUpload::make('cover_image')
                                 ->image()
@@ -38,9 +40,12 @@ class PostForm
                         ->live()
                         ->hidden(fn(callable $get) => !empty($get('cover_image_url'))),
                     Tabs\Tab::make('Cover URL')
+                        ->label('URL Upload')
+                        ->icon('heroicon-o-globe-alt')
                         ->schema([
                             TextInput::make('cover_image_url')
                                 ->url()
+                                ->helperText('Enter a valid image URL')
                                 ->required(fn (callable $get) => empty($get('cover_image')))
                                 ->afterStateUpdated(function (callable $set, $state) {
                                     if (!empty($state)) {
